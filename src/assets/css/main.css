@@ -92,8 +92,7 @@ h1 {
     height: auto;
     aspect-ratio: 1 / 1;
     gap: 5px;
-    margin-top: 3rem;
-    margin-inline: auto;
+    margin: 3rem auto;
     background-color: aqua;
 }
 
