@@ -4,7 +4,7 @@
         "O": 0
     },
     "current_player": "X",
-    "winner_player": "",
+    "winner_positions": [],
     "board": [
         "",
         "",

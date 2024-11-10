@@ -7,6 +7,9 @@ $data = $game_data->getData();
 $board = $data["board"];
 $current_player = $data["current_player"];
 
+$winner_positions = $data["winner_positions"];
+$is_board_full =$game_data->isBoardFull();
+
 ?>
 
 <!doctype html>
@@ -46,15 +49,38 @@ $current_player = $data["current_player"];
             <input type="text" name="player" value="<?= $current_player ?>" id="player" readonly="readonly" hidden="hidden"/>
             <input type="text" name="position" value="" id="position" readonly="readonly" hidden="hidden"/>
         </form>
+
+        <div class="result-container <?= $is_board_full || count($winner_positions) ? 'active' : '' ?>">
+            <?php if ($is_board_full && empty($winner_positions)): ?>
+                <div>
+                    <p class="big-player-result">
+                        X O
+                    </p>
+                    <p class="text-result">
+                        DRAW!
+                    </p>
+                </div>
+            <?php elseif (count($winner_positions)): ?>
+                <div id="winner-result" class="winner">
+                    <p class="big-player-result">
+                        <?= $current_player ?>
+                    </p>
+                    <p class="text-result">
+                        WIN!
+                    </p>
+                </div>
+            <?php endif ?>
+        </div>
     </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
 <script>
     window.onload = function() {
         const boardItems = Array.from(document.querySelectorAll('.board-item'));
         const form = document.getElementById('handle-form');
         const selectedPosition = document.getElementById('position');
-
+        const winnerResult = document.getElementById('winner-result');
 
         boardItems.forEach(item => {
             item.addEventListener('click', () => {
@@ -72,6 +98,18 @@ $current_player = $data["current_player"];
                 form.submit();
             });
         });
+
+        console.log(winnerResult)
+
+        if (winnerResult !== null) {
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                });
+            }, 760);
+        }
     }
 </script>
 </body>

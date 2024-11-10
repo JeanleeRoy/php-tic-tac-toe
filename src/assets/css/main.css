@@ -53,6 +53,7 @@ h1 {
 }
 
 .container {
+    position: relative;
     width: 100%;
     max-width: 900px;
     margin: auto;
@@ -109,4 +110,62 @@ h1 {
 
 .main-form {
     visibility: hidden;
+    margin-bottom: 50px;
+}
+
+.result-container {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 200px;
+    padding: 1rem;
+    margin-inline: auto;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px solid var(--text-light-color);
+    box-shadow: 0 10px 80px 20px black;
+    background-color: var(--main-bg-color);
+}
+
+.result-container.active {
+    opacity: 1;
+    visibility: visible;
+    animation: forwards 5s falls-down;
+    z-index: 10;
+}
+
+@keyframes falls-down {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-70%);
+    }
+    20% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(100%);
+    }
+    80% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(100%);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+}
+
+.big-player-result {
+    font-size: 5rem;
+    padding-bottom: 0.8rem;
+}
+
+.winner .big-player-result {
+    color: aqua;
+}
+
+.text-result {
+    font-size: 2rem;
 }
