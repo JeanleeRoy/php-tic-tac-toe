@@ -44,7 +44,8 @@ $is_board_full =$game_data->isBoardFull();
     <div class="container">
         <div class="board-container" id="board">
             <?php foreach($board as $i => $item): ?>
-            <div class="board-item" data-index="<?= ($i);?>">
+            <?php $active = in_array($i, $winner_positions) ?>
+            <div class="board-item <?= $active ? 'active' : ''?>" data-index="<?= ($i);?>">
                 <?= $item; ?>
             </div>
             <?php endforeach; ?>
@@ -116,7 +117,7 @@ $is_board_full =$game_data->isBoardFull();
                     spread: 70,
                     origin: { y: 0.6 },
                 });
-            }, 760);
+            }, 800);
         }
 
         const resetControlsForm = document.getElementById('reset-controls');
