@@ -6,6 +6,7 @@ $game_data = new GameData();
 $data = $game_data->getData();
 $board = $data["board"];
 $current_player = $data["current_player"];
+$scores = $data["scores"];
 
 $winner_positions = $data["winner_positions"];
 $is_board_full =$game_data->isBoardFull();
@@ -28,10 +29,14 @@ $is_board_full =$game_data->isBoardFull();
     <div class="container">
         <div class="players-container" id="players">
             <div class="player-box <?= $current_player === 'X' ? 'active' : '' ?>">
-                X: <span class="player-score">0</span>
+                X: <span class="player-score">
+                    <?= $scores['X'] ?>
+                </span>
             </div>
             <div class="player-box <?= $current_player === 'O' ? 'active' : '' ?>">
-                O: <span class="player-score">0</span>
+                O: <span class="player-score">
+                    <?= $scores['O'] ?>
+                </span>
             </div>
         </div>
     </div>
@@ -72,6 +77,13 @@ $is_board_full =$game_data->isBoardFull();
             <?php endif ?>
         </div>
     </div>
+
+    <div class="container">
+        <form action="includes/handle-reset.php" method="post" class="reset-controls" id="reset-controls">
+            <input type="text" name="intention" value="" id="reset-intention" readonly="readonly" hidden="hidden"/>
+            <input class="btn" type="button" value="New attempt" data-reset="new-attempt" />
+        </form>
+    </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
@@ -87,9 +99,7 @@ $is_board_full =$game_data->isBoardFull();
                 const position = item.dataset.index;
                 const itemValue = item.innerText.split(' ').join('');
 
-                console.log({position, itemValue});
-
-                if (!position || itemValue !== '') {
+                if (!position || itemValue !== '' || winnerResult !== null) {
                     return;
                 }
 
@@ -98,8 +108,6 @@ $is_board_full =$game_data->isBoardFull();
                 form.submit();
             });
         });
-
-        console.log(winnerResult)
 
         if (winnerResult !== null) {
             setTimeout(() => {
@@ -110,6 +118,19 @@ $is_board_full =$game_data->isBoardFull();
                 });
             }, 760);
         }
+
+        const resetControlsForm = document.getElementById('reset-controls');
+        const resetIntention = document.getElementById('reset-intention');
+        const resetButtons = document.querySelectorAll('[data-reset]');
+
+        Array.from(resetButtons).forEach(btn => {
+            btn.addEventListener('click', function () {
+                const intention = btn.dataset.reset;
+
+                resetIntention.setAttribute('value', intention);
+                resetControlsForm.submit();
+            });
+        });
     }
 </script>
 </body>

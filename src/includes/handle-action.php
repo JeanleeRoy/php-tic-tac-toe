@@ -24,6 +24,12 @@ if (!is_numeric($position) || !$game_data->isValidPosition($position)) {
 }
 
 $game_data->setPlayerPosition($position, $current_player);
-$game_data->setNextPlayer();
+
+$winner = $game_data->validateWinner();
+$isFull = $game_data->isBoardFull();
+
+if (!$winner && !$isFull) {
+    $game_data->setNextPlayer();
+}
 
 goToIndex();

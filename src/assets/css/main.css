@@ -129,6 +129,13 @@ h1 {
     border: 1px solid var(--text-light-color);
     box-shadow: 0 10px 80px 20px black;
     background-color: var(--main-bg-color);
+    cursor: default;
+}
+
+@media (max-width: 600px){
+    .result-container {
+        top: 40%;
+    }
 }
 
 .result-container.active {
@@ -154,6 +161,7 @@ h1 {
     100% {
         opacity: 0;
         transform: translateX(-50%) translateY(100%);
+        visibility: hidden;
     }
 }
 
@@ -168,4 +176,24 @@ h1 {
 
 .text-result {
     font-size: 2rem;
+}
+
+.btn {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--text-light-color);
+    box-shadow: 5px 5px 15px 5px black;
+    background-color: var(--main-bg-color);
+    color: var(--text-light-color);
+    cursor: pointer;
+}
+
+.reset-controls {
+    display: flow;
+    padding: 1rem;
+    justify-content: center;
+    width: fit-content;
+    max-width: min(400px, 100%);
+    margin-inline: auto;
 }

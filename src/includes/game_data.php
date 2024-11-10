@@ -32,6 +32,18 @@ final class GameData
         }
     }
 
+    private function clearWinnerPositions(): void
+    {
+        $this->data['winner_positions'] = [];
+    }
+
+    public function setNewAttempt()
+    {
+        $this->clearBoard();
+        $this->setDefaultPlayer();
+        $this->clearWinnerPositions();
+    }
+
     public function saveData(array|null $newData = null): void
     {
         $data = $newData ?? $this->data;
@@ -50,6 +62,10 @@ final class GameData
 
     public function isValidPosition(int $position): bool
     {
+        if (count($this->data['winner_positions'])) {
+            return false;
+        }
+
         return $position >= 0 && $position < 9 && $this->data['board'][$position] === '';
     }
 
@@ -74,6 +90,26 @@ final class GameData
         return array_reduce($this->data['board'], function ($carry, $item) {
             return $carry && $item !== '';
         }, true);
+    }
+
+    public function validateWinner(): string|null
+    {
+        foreach ($this->data['win_positions'] as $positions) {
+            $p = array_map(fn($i) => (int) $i, explode('.', $positions));
+            $item = $this->data['board'][$p[0]];
+
+            $is_winner = $item !== ''
+                && $item === $this->data['board'][$p[1]]
+                && $item === $this->data['board'][$p[2]];
+
+            if ($is_winner) {
+                $this->data['winner_positions'] = $p;
+                $this->data['scores'][$item] += 1;
+                return $item;
+            }
+        }
+
+        return null;
     }
 
     public function resetGame(): void
