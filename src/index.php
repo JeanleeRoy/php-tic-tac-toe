@@ -2,8 +2,8 @@
 
 require_once "./includes/game_data.php";
 
-$gamesData = new GameData();
-$data = $gamesData->getData();
+$game_data = new GameData();
+$data = $game_data->getData();
 $board = $data["board"];
 $current_player = $data["current_player"];
 
@@ -42,9 +42,9 @@ $current_player = $data["current_player"];
             <?php endforeach; ?>
         </div>
 
-        <form method="post" action="./includes/handle-action.php" id="handle-form">
-            <input type="text" name="player" value="<?= $current_player ?>" id="player" readonly="readonly"/>
-            <input type="text" name="position" value="" id="position" readonly="readonly"/>
+        <form method="post" action="./includes/handle-action.php" id="handle-form" class="main-form">
+            <input type="text" name="player" value="<?= $current_player ?>" id="player" readonly="readonly" hidden="hidden"/>
+            <input type="text" name="position" value="" id="position" readonly="readonly" hidden="hidden"/>
         </form>
     </div>
 </main>
@@ -69,7 +69,7 @@ $current_player = $data["current_player"];
 
                 selectedPosition.value = position;
 
-                //form.submit();
+                form.submit();
             });
         });
     }
